@@ -63,7 +63,7 @@ function test()
 		 2 3 0 0 0; 
 		 1 2 0 0 4; 
 		 0 0 0 4 0]
-	maxpartition, maxcut = goemansWilliamson(W)
+	maxcut, maxpartition = goemansWilliamson(W)
 	println(maxcut)
 	println(maxpartition)
 end
