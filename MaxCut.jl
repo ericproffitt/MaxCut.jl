@@ -15,7 +15,7 @@ function goemansWilliamson{T <: Real}(W::Array{T, 2}; tol::Real=1e-1, iter::Int=
 	which ever comes first, the hyperplane with the highest corresponding binary cut is used to partition 
 	the vertices.";
 	"W: Adjacency matrix.";
-	"tol: Maximum distance between an acceptable cut and the MAXCUT upper bound.";
+	"tol: Maximum acceptable distance between a cut and the MAXCUT upper bound.";
 	"iter: Maximum number of hyperplane iterations before a cut is chosen.";
 	LinAlg.chksquare(W)
 	LinAlg.issym(W)		|| error("Adjacency matrix must be symmetric.")
