@@ -6,7 +6,7 @@ using SCS
 "Partition a graph into two disjoint sets such that the sum of the edge weights
 from all edges which cross the partition is as large as possible (known to be NP-hard).";
 
-function goemansWilliamson{T <: Real}(W::Array{T, 2}; tol::Real=1e-6, iter::Int=100)
+function goemansWilliamson{T <: Real}(W::Array{T, 2}; tol::Real=1e-1, iter::Int=100)
 	"A cut of a graph can be produced by assigning either 1 or -1 to each vertex.  The Goemans-Williamson 
 	algorithm relaxes this binary condition to allow for vector assignments drawn from the (n-1)-sphere
 	(choosing an n-1 dimensional space will insure seperability).  This relaxation can then be written as 
@@ -54,9 +54,19 @@ function goemansWilliamson{T <: Real}(W::Array{T, 2}; tol::Real=1e-6, iter::Int=
 		if (upperbound - maxcut) < tol; break; end
 		if i == iter; println("Max iterations reached."); end
 	end
-	return maxpartition, round(maxcut,3)
+	return round(maxcut,3), maxpartition
 end
 
+function test()
+	W = [0 5 2 1 0; 
+		 5 0 3 2 0; 
+		 2 3 0 0 0; 
+		 1 2 0 0 4; 
+		 0 0 0 4 0]
+	maxpartition, maxcut = goemansWilliamson(W)
+	println(maxcut)
+	println(maxpartition)
+end
 
 
 
