@@ -9,7 +9,7 @@ from all edges which cross the partition is as large as possible (known to be NP
 function goemansWilliamson{T <: Real}(W::Array{T, 2}; tol::Real=1e-1, iter::Int=100)
 	"A cut of a graph can be produced by assigning either 1 or -1 to each vertex.  The Goemans-Williamson 
 	algorithm relaxes this binary condition to allow for vector assignments drawn from the (n-1)-sphere
-	(choosing an n-1 dimensional space will insure seperability).  This relaxation can then be written as 
+	(choosing an n-1 dimensional space will ensure seperability).  This relaxation can then be written as 
 	an SDP.  Once the optimal vector assignments are found, origin centered hyperplanes are generated and 
 	their corresponding cuts evaluated.  After 'iter' trials, or when the desired tolerance is reached,
 	which ever comes first, the hyperplane with the highest corresponding binary cut is used to partition 
