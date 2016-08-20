@@ -13,7 +13,6 @@ function goemansWilliamson{T<:Real}(W::Matrix{T}; tol::Real=1e-1, iter::Int=100)
 	an SDP.  Once the optimal vector assignments are found, origin centered hyperplanes are generated and 
 	their corresponding cuts evaluated.  After 'iter' trials, or when the desired tolerance is reached,
 	which ever comes first, the hyperplane with the highest corresponding binary cut is used to partition 
-<<<<<<< HEAD
 	the vertices."
 	"W:		Adjacency matrix."
 	"tol:	Maximum acceptable distance between a cut and the MAXCUT upper bound."
@@ -25,18 +24,6 @@ function goemansWilliamson{T<:Real}(W::Matrix{T}; tol::Real=1e-1, iter::Int=100)
 	@assert all(diag(W) .== 0)	"Diagonal entries of adjacency matrix must be zero."
 	@assert tol > 0				"The tolerance 'tol' must be positive."
 	@assert iter > 0			"The number of iterations 'iter' must be a positive integer."
-=======
-	the vertices.";
-	"W:	Adjacency matrix.";
-	"tol:	Maximum acceptable distance between a cut and the MAXCUT upper bound.";
-	"iter:	Maximum number of hyperplane iterations before a cut is chosen.";
-	LinAlg.chksquare(W)
-	LinAlg.issym(W)		|| error("Adjacency matrix must be symmetric.")
-	all(W .>= 0)		|| error("Entries of the adjacency matrix must be nonnegative.")
-	all(diag(W) .== 0)	|| error("Diagonal entries of adjacency matrix must be zero.")
-	tol > 0			|| error("The tolerance 'tol' must be positive.")
-	iter > 0		|| error("The number of iterations 'iter' must be at least one.")
->>>>>>> origin/master
 
 	"This is the standard SDP Relaxation of the MAXCUT problem, a reference can be found at
 	http://www.sfu.ca/~mdevos/notes/semidef/GW.pdf."
@@ -73,18 +60,11 @@ end
 
 function test()
 	W = [0 5 2 1 0; 
-<<<<<<< HEAD
 		 5 0 3 2 0; 
 		 2 3 0 0 0; 
 		 1 2 0 0 4; 
 		 0 0 0 4 0]
-	
-=======
-	     5 0 3 2 0; 
-	     2 3 0 0 0; 
-	     1 2 0 0 4; 
-	     0 0 0 4 0]
->>>>>>> origin/master
+
 	maxcut, maxpartition = goemansWilliamson(W)
 	@show maxcut
 	@show maxpartition
