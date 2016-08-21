@@ -1,7 +1,7 @@
 using Convex # Pkg.add("Convex")
 using SCS # Pkg.add("SCS")
 
-"MAXCUT"
+"Max-Cut"
 
 "Partition a graph into two disjoint sets such that the sum of the edge weights
 from all edges which cross the partition is as large as possible (known to be NP-hard)."
@@ -15,7 +15,7 @@ function goemansWilliamson{T<:Real}(W::Matrix{T}; tol::Real=1e-1, iter::Int=100)
 	which ever comes first, the hyperplane with the highest corresponding binary cut is used to partition 
 	the vertices."
 	"W:		Adjacency matrix."
-	"tol:	Maximum acceptable distance between a cut and the MAXCUT upper bound."
+	"tol:	Maximum acceptable distance between a cut and the Max-Cut upper bound."
 	"iter:	Maximum number of hyperplane iterations before a cut is chosen."
 
 	LinAlg.chksquare(W)
@@ -25,7 +25,7 @@ function goemansWilliamson{T<:Real}(W::Matrix{T}; tol::Real=1e-1, iter::Int=100)
 	@assert tol > 0				"The tolerance 'tol' must be positive."
 	@assert iter > 0			"The number of iterations 'iter' must be a positive integer."
 
-	"This is the standard SDP Relaxation of the MAXCUT problem, a reference can be found at
+	"This is the standard SDP Relaxation of the Max-Cut problem, a reference can be found at
 	http://www.sfu.ca/~mdevos/notes/semidef/GW.pdf."
 	k = size(W, 1)
 	S = Semidefinite(k)
@@ -36,7 +36,7 @@ function goemansWilliamson{T<:Real}(W::Matrix{T}; tol::Real=1e-1, iter::Int=100)
 	solve!(problem, SCSSolver(verbose=0))
 	
 	X = full(cholfact(S.value, :U, Val{true}))
-	upperbound = (sum(W) - vecdot(W, S.value)) / 4 # A non-trivial upper bound on MAXCUT.
+	upperbound = (sum(W) - vecdot(W, S.value)) / 4 # A non-trivial upper bound on Max-Cut.
 
 	"Random origin-centered hyperplanes, generated to produce partitions of the graph."
 	maxcut = 0
