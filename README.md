@@ -2,7 +2,7 @@
 
 Partition a graph into two disjoint sets such that the sum of the edge weights which cross the partition is as large as possible (known to be NP-hard).
 
-A cut of a graph can be produced by assigning either 1 or -1 to each vertex. The Goemans-Williamson algorithm relaxes this binary condition to allow for vector assignments drawn from the (n-1)-sphere (choosing an n-1 dimensional space will ensure seperability). This relaxation can then be written as an SDP. Once the optimal vector assignments are found, origin centered hyperplanes are generated and their corresponding cuts evaluated. After 'iter' trials, or when the desired tolerance is reached, the hyperplane with the highest corresponding binary cut is used to partition the vertices.
+A cut of a graph can be produced by assigning either 1 or -1 to each vertex. The Goemans-Williamson algorithm relaxes this binary condition to allow for vector assignments drawn from the (n-1)-sphere (choosing an n-1 dimensional space will ensure seperability). This relaxation can then be written as a semidefinite program. Once the optimal vector assignments are found, origin centered hyperplanes are generated and their corresponding cuts evaluated. After 'iter' trials, or when the desired tolerance is reached, the hyperplane with the highest corresponding binary cut is used to partition the vertices.
 
 #### Dependencies
 ```julia
