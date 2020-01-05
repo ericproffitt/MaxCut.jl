@@ -22,7 +22,7 @@ function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=1e-1)
 	LinearAlgebra.checksquare(W)
 	issymmetric(W)					|| throw(ArgumentError("Adjacency matrix must be symmetric."))
 	all(W .>= 0)					|| throw(ArgumentError("Adjacency matrix must be nonnegative."))
-	all(iszero.(diag(W)))			|| throw(ArgumentError("Diagonal of adjacency matrix must be zero."))
+	all(iszero.(diag(W)))			|| throw(ArgumentError("Diagonal of adjacency matrix must be zero (no self loops)."))
 	(tol >= 0)						|| throw(ArgumnetError("The tolerance must be nonnegative."))
 	(iter > 0)						|| throw(ArgumnetError("The number of iterations must be a positive integer."))
 
@@ -38,7 +38,7 @@ function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=1e-1)
 
 	### Ensure symmetric positive-definite.
 	A = 0.5 * (S.value + S.value')
-	A += max(0, -eigmin(A)) * Matrix(I, size(A, 1), size(A, 1)) .+ eps(1e3)
+	A += (max(0, -eigmin(A)) + 1e-14) * Matrix(I, size(A, 1), size(A, 1))
 
 	X = Matrix(cholesky(A))
 
