@@ -26,11 +26,11 @@ W = [0 5 2 1 0;
      1 2 0 0 4; 
      0 0 0 4 0]
 
-	max_cut, max_partition = maxcut(W)
+max_cut, max_partition = maxcut(W)
 	
-	@show max_cut
-	### max_cut = 14.0
+@show max_cut
+### max_cut = 14.0
 
-	@show max_partition
-	### max_partition = ([1, 3, 4], [2, 5])
+@show max_partition
+### max_partition = ([1, 3, 4], [2, 5])
 ```
