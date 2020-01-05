@@ -64,16 +64,3 @@ function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=1e-1)
 	end
 	return round(max_cut, digits=3), max_partition
 end
-
-function test()
-	W = [0 5 2 1 0; 
-		 5 0 3 2 0; 
-		 2 3 0 0 0; 
-		 1 2 0 0 4; 
-		 0 0 0 4 0]
-
-	max_cut, max_partition = maxcut(W)
-	@show max_cut
-	@show max_partition
-	nothing
-end
