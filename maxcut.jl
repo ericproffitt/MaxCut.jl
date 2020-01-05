@@ -1,9 +1,10 @@
+using LinearAlgebra
 using Convex
 using SCS
 
 "The Goemans-Williamson algorithm for the MAXCUT problem."
 
-function goemansWilliamson{T<:Real}(W::Matrix{T}; tol::Real=1e-1, iter::Int=100)
+function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=1e-1)
 	"Partition a graph into two disjoint sets such that the sum of the edge weights
 	which cross the partition is as large as possible (known to be NP-hard)."
 
@@ -18,50 +19,50 @@ function goemansWilliamson{T<:Real}(W::Matrix{T}; tol::Real=1e-1, iter::Int=100)
 	"tol:	Maximum acceptable distance between a cut and the MAXCUT upper bound."
 	"iter:	Maximum number of hyperplane iterations before a cut is chosen."
 
-	LinAlg.checksquare(W)
-	@assert LinAlg.issymmetric(W)	"Adjacency matrix must be symmetric."
-	@assert all(W .>= 0)			"Entries of the adjacency matrix must be nonnegative."
-	@assert all(diag(W) .== 0)		"Diagonal entries of adjacency matrix must be zero."
-	@assert tol > 0					"The tolerance 'tol' must be positive."
-	@assert iter > 0				"The number of iterations 'iter' must be a positive integer."
+	LinearAlgebra.checksquare(W)
+	issymmetric(W)					|| throw(ArgumentError("Adjacency matrix must be symmetric."))
+	all(W .>= 0)					|| throw(ArgumentError("Adjacency matrix must be nonnegative."))
+	all(iszero.(diag(W)))			|| throw(ArgumentError("Diagonal of adjacency matrix must be zero."))
+	(tol >= 0)						|| throw(ArgumnetError("The tolerance must be nonnegative."))
+	(iter > 0)						|| throw(ArgumnetError("The number of iterations must be a positive integer."))
 
 	"This is the standard SDP Relaxation of the MAXCUT problem, a reference can be found at
 	http://www.sfu.ca/~mdevos/notes/semidef/GW.pdf."
 	k = size(W, 1)
 	S = Semidefinite(k)
 	
-	expr = vecdot(W, S)
+	expr = dot(W, S)
 	constr = [S[i,i] == 1.0 for i in 1:k]
 	problem = minimize(expr, constr...)
 	solve!(problem, SCSSolver(verbose=0))
 
 	### Ensure symmetric positive-definite.
 	A = 0.5 * (S.value + S.value')
-	A += max(0, -eigmin(A)) * eye(size(A, 1)) + eps(1e3)
+	A += max(0, -eigmin(A)) * Matrix(I, size(A, 1), size(A, 1)) .+ eps(1e3)
 
-	X = full(chol(A))
+	X = Matrix(cholesky(A))
 
 	### A non-trivial upper bound on MAXCUT.
-	upperbound = (sum(W) - vecdot(W, S.value)) / 4 
+	upperbound = (sum(W) - dot(W, S.value)) / 4 
 
 	"Random origin-centered hyperplanes, generated to produce partitions of the graph."
-	maxcut = 0
-	maxpartition = nothing
+	max_cut = 0
+	max_partition = nothing
 
 	for i in 1:iter
 		gweval = X' * randn(k)
-		partition = (find(gweval .>= 0), find(gweval .< 0))
+		partition = (findall(gweval .>= 0), findall(gweval .< 0))
 		cut = sum(W[partition...])
 
-		if cut > maxcut
-			maxpartition = partition
-			maxcut = cut
+		if cut > max_cut
+			max_partition = partition
+			max_cut = cut
 		end
 
-		upperbound - maxcut < tol && break
-		i == iter && println("Max iterations reached.")
+		(upperbound - max_cut < tol) && break
+		(i == iter) && println("Max iterations reached.")
 	end
-	return round(maxcut, 3), maxpartition
+	return round(max_cut, digits=3), max_partition
 end
 
 function test()
@@ -71,8 +72,8 @@ function test()
 		 1 2 0 0 4; 
 		 0 0 0 4 0]
 
-	maxcut, maxpartition = goemansWilliamson(W)
-	@show maxcut
-	@show maxpartition
+	max_cut, max_partition = maxcut(W)
+	@show max_cut
+	@show max_partition
 	nothing
 end
