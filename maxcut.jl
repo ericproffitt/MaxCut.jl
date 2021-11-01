@@ -23,29 +23,29 @@ function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=1e-1)
 	issymmetric(W)					|| throw(ArgumentError("Adjacency matrix must be symmetric."))
 	all(W .>= 0)					|| throw(ArgumentError("Adjacency matrix must be nonnegative."))
 	all(iszero.(diag(W)))			|| throw(ArgumentError("Diagonal of adjacency matrix must be zero (no self loops)."))
-	(tol >= 0)						|| throw(ArgumnetError("The tolerance must be nonnegative."))
-	(iter > 0)						|| throw(ArgumnetError("The number of iterations must be a positive integer."))
+	(tol >= 0)						|| throw(ArgumentError("The tolerance must be nonnegative."))
+	(iter > 0)						|| throw(ArgumentError("The number of iterations must be a positive integer."))
 
-	"This is the standard SDP Relaxation of the MAXCUT problem, a reference can be found at
-	http://www.sfu.ca/~mdevos/notes/semidef/GW.pdf."
+	"This is the standard SDP Relaxation of the MAXCUT problem, a reference can be found at,
+	http://www.sfu.ca/~mdevos/notes/semidef/GW.pdf"
 	k = size(W, 1)
 	S = Semidefinite(k)
 	
 	expr = dot(W, S)
 	constr = [S[i,i] == 1.0 for i in 1:k]
 	problem = minimize(expr, constr...)
-	solve!(problem, SCSSolver(verbose=0))
+	solve!(problem, SCS.Optimizer(verbose=0))
 
-	### Ensure symmetric positive-definite.
+	## ensure symmetric positive-definite
 	A = 0.5 * (S.value + S.value')
 	A += (max(0, -eigmin(A)) + 1e-14) * Matrix(I, size(A, 1), size(A, 1))
 
 	X = Matrix(cholesky(A))
 
-	### A non-trivial upper bound on MAXCUT.
-	upperbound = (sum(W) - dot(W, S.value)) / 4 
+	## a non-trivial upper bound on MAXCUT
+	upperbound = (sum(W) - dot(W, S.value)) / 4
 
-	"Random origin-centered hyperplanes, generated to produce partitions of the graph."
+	## random origin-centered hyperplanes, generated to produce partitions of the graph
 	max_cut = 0
 	max_partition = nothing
 
@@ -62,5 +62,5 @@ function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=1e-1)
 		(upperbound - max_cut < tol) && break
 		(i == iter) && println("Max iterations reached.")
 	end
-	return round(max_cut, digits=3), max_partition
+	return max_cut, max_partition
 end
