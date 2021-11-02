@@ -4,7 +4,7 @@ using SCS
 
 "The Goemans-Williamson algorithm for the MAXCUT problem."
 
-function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=1e-1)
+function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=0)
 	"Partition a graph into two disjoint sets such that the sum of the edge weights
 	which cross the partition is as large as possible (known to be NP-hard)."
 

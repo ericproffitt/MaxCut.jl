@@ -13,9 +13,9 @@ using SCS
 
 #### Arguments
 ```julia
-W:      Adjacency matrix.
-tol:    Maximum acceptable distance between a cut and the MAXCUT upper bound.
-iter:   Maximum number of hyperplane iterations before a cut is chosen.
+W:      (positional arg) Adjacency matrix.
+tol:    (keyword arg) Maximum acceptable distance between a cut and the MAXCUT upper bound (default=0).
+iter:   (keyword arg) Maximum number of hyperplane iterations before a cut is chosen (default=100).
 ```
 
 #### Example
