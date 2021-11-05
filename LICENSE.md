@@ -1,4 +1,4 @@
-The maxcut.jl package is licensed under the MIT "Expat" License:
+The MaxCut.jl package is licensed under the MIT "Expat" License:
 
 > Copyright (c) 2021: Eric Proffitt.
 >
