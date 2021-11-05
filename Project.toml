@@ -10,4 +10,3 @@ SCS = "c946c3f1-0d1f-5ce8-9dea-7daa1f7e2d13"
 [compat]
 julia = "1"
 Convex = "~0.14.16"
-#SCS = "~0.8.1"

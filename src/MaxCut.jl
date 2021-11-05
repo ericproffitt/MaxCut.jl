@@ -36,7 +36,7 @@ function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=0)
 	expr = dot(W, S)
 	constr = [S[i,i] == 1.0 for i in 1:k]
 	problem = minimize(expr, constr...)
-	solve!(problem, SCS.Optimizer, verbose=false)
+	solve!(problem, SCS.Optimizer(verbose=false))
 
 	## ensure symmetric positive-definite
 	A = 0.5 * (S.value + S.value')
