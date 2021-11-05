@@ -11,7 +11,7 @@ function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=0)
 	"A cut of a graph can be produced by assigning either 1 or -1 to each vertex. The Goemans-Williamson 
 	algorithm relaxes this binary condition to allow for vector assignments drawn from the (n-1)-sphere
 	(choosing an n-1 dimensional space will ensure seperability). This relaxation can then be written as 
-	an semidefinite program. Once the optimal vector assignments are found, origin centered hyperplanes are generated and 
+	a semidefinite program. Once the optimal vector assignments are found, origin centered hyperplanes are generated and 
 	their corresponding cuts evaluated. After 'iter' trials, or when the desired tolerance is reached,
 	the hyperplane with the highest corresponding binary cut is used to partition the vertices."
 	
