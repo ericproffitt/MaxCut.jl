@@ -9,21 +9,21 @@ A cut of a graph can be produced by assigning either 1 or -1 to each vertex. The
 (@v1.6) pkg> add https://github.com/ericproffitt/MaxCut.jl
 ```
 
-#### Dependencies
+### Dependencies
 ```julia
 LinearAlgebra
 Convex
 SCS
 ```
 
-#### Arguments
+### Arguments
 ```julia
 W:      (positional arg) Adjacency matrix.
 tol:    (keyword arg) Maximum acceptable distance between a cut and the MAXCUT upper bound (default=0).
 iter:   (keyword arg) Maximum number of hyperplane iterations before a cut is chosen (default=100).
 ```
 
-#### Example
+### Example
 ```julia
 W = [0 5 2 1 0; 
      5 0 3 2 0; 
@@ -40,5 +40,5 @@ max_cut, max_partition = maxcut(W);
 ## max_partition = ([2, 5], [1, 3, 4])
 ```
 
-#### Reference
+### References
 http://www.sfu.ca/~mdevos/notes/semidef/GW.pdf
