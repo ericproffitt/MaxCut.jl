@@ -1,4 +1,4 @@
-module maxcut
+module MaxCut
 
 using LinearAlgebra
 using Convex
