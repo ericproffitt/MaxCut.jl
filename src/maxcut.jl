@@ -1,3 +1,5 @@
+module maxcut
+
 using LinearAlgebra
 using Convex
 using SCS
@@ -63,4 +65,8 @@ function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=0)
 		(i == iter) && println("Max iterations reached.")
 	end
 	return max_cut, max_partition
+end
+
+export maxcut
+
 end
