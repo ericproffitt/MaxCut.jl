@@ -6,9 +6,9 @@ A cut of a graph can be produced by assigning either 1 or -1 to each vertex. The
 
 #### Dependencies
 ```julia
-using LinearAlgebra
-using Convex
-using SCS
+LinearAlgebra
+Convex
+SCS
 ```
 
 #### Arguments
