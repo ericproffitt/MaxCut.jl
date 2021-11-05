@@ -40,5 +40,5 @@ max_cut, max_partition = maxcut(W);
 ## max_partition = ([1, 3, 4], [2, 5])
 ```
 
-### References
+### Reference
 http://www.sfu.ca/~mdevos/notes/semidef/GW.pdf
