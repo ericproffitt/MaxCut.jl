@@ -1,7 +1,13 @@
 name = "maxcut"
+uuid = "6af15267-3226-46fb-9d72-8bee1ad40623"
 version = "1.0.1"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Convex = "f65535da-76fb-5f13-bab9-19810c17039a"
 SCS = "c946c3f1-0d1f-5ce8-9dea-7daa1f7e2d13"
+
+[compat]
+julia = "1"
+Convex = "0.14"
+SCS = "0.8"
