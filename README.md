@@ -37,7 +37,7 @@ max_cut, max_partition = maxcut(W);
 ## max_cut = 14
 
 @show max_partition;
-## max_partition = ([2, 5], [1, 3, 4])
+## max_partition = ([1, 3, 4], [2, 5])
 ```
 
 ### References
