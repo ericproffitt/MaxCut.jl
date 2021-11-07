@@ -48,7 +48,7 @@ function maxcut(W::Matrix{<:Real}; iter::Int=100, tol::Real=0)
 	upperbound = (sum(W) - dot(W, S.value)) / 4
 
 	## random origin-centered hyperplanes, generated to produce partitions of the graph
-	max_cut = 0
+	max_cut = -1
 	max_partition = nothing
 
 	for i in 1:iter
