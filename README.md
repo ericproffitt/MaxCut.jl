@@ -25,6 +25,8 @@ iter:   (keyword arg) Maximum number of hyperplane iterations before a cut is ch
 
 ### Example
 ```julia
+using MaxCut
+
 W = [0 5 2 1 0; 
      5 0 3 2 0; 
      2 3 0 0 0; 
