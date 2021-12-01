@@ -6,7 +6,7 @@ A cut of a graph can be produced by assigning either 1 or -1 to each vertex. The
 
 ### Installation
 ```julia
-(@v1.6) pkg> add https://github.com/ericproffitt/MaxCut.jl
+(@v1.7) pkg> add https://github.com/ericproffitt/MaxCut.jl
 ```
 
 ### Dependencies
